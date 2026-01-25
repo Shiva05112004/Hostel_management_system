@@ -1,0 +1,135 @@
+Full-page background
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  background-image: url("https://imgcdn.stablediffusionweb.com/2024/6/19/0cc89d13-61db-402c-abf5-b4ed192ea025.jpg"); /* ✅ Put your image in public/images/bg.jpg */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+  
+}
+
+/* Center the form */
+/* .reg {
+   /* background: rgba(255, 255, 255, 0.15); */
+  /* color: rgb(2, 20, 20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  backdrop-filter: blur(9px);
+} */ 
+ .reg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+/* Transparent glass-style form box */
+/* Glass effect on form only */
+#sh {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); /* For Safari */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 40px;
+  border-radius: 16px;
+  width: 350px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+/* #sh {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  width: 360px;
+  position: relative;
+  color: #fff;
+} */
+
+/* Floating labels container */
+#sh .input-container {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+#sh input,
+#sh select {
+  width: 100%;
+  padding: 14px 12px;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+}
+
+#sh input:focus,
+#sh select:focus {
+  border-color: #00bfff;
+}
+
+#sh label {
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  color: #efeaeacf;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  /* background: rgba(235, 235, 234, 0.4); */
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+/* Floating effect */
+#sh input:focus ~ label,
+#sh input:not(:placeholder-shown) ~ label,
+#sh select:focus ~ label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #070f12;
+ background-color: none;
+  /* background: rgba(0, 0, 0, 0.9); */
+}
+
+/* Register button */
+#shs2 {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #00bfff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#shs2:hover {
+  background-color: #009acd;
+}
+
+/* Link text */
+#sh p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #eee;
+}
+
+.link {
+  color: #00bfff;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}

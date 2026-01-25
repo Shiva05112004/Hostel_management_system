@@ -1,0 +1,47 @@
+/* styles/addNotice.css */
+
+.add-notice-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #0e8f07;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-image: url("");
+}
+
+.add-notice-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-notice-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.add-notice-form input,
+.add-notice-form textarea {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.add-notice-form button {
+  padding: 12px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-notice-form button:hover {
+  background-color: #0056b3;
+}

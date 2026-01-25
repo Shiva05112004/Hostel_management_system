@@ -1,0 +1,97 @@
+/* Container for the dashboard content */
+.dashboard-content {
+  padding: 40px;
+  text-align: center;
+  background-color: lab(90.5% 3.52 -5.36);
+  min-height: 100vh;
+
+  background-image: url("https://imgcdn.stablediffusionweb.com/2024/6/19/0cc89d13-61db-402c-abf5-b4ed192ea025.jpg"); /* ✅ Put your image in public/images/bg.jpg */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Welcome title */
+.wel {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+/* Cards container centered */
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+/* Each individual card */
+.card {
+  background-color: #beadd9;
+  color: #333;
+  padding: 25px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 1.2rem;
+  font-weight: 600;
+  min-width: 180px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background-color: #ecf0f1;
+}
+
+/* Sidebar (optional improvement) */
+.sidebar-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Sidebar panel */
+.dashboard-sidebar {
+  position: fixed;
+  top: 0;
+  left: -220px;
+  width: 200px;
+  height: 100%;
+  background-color: #34495e;
+  color: white;
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.dashboard-sidebar.open {
+  left: 0;
+}
+
+.dashboard-sidebar h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.dashboard-sidebar button {
+  display: block;
+  margin-bottom: 15px;
+  padding: 10px 16px;
+  width: 100%;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dashboard-sidebar button:hover {
+  background-color: #3f5870;
+}

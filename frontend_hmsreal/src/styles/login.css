@@ -1,0 +1,106 @@
+/* Full screen background */
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url(''); /* Ensure image exists in /public/images/ */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Glassy transparent form */
+.glass-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 40px;
+  border-radius: 16px;
+  width: 320px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glass-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+}
+
+/* Floating label inputs */
+.input-container {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 14px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-container input::placeholder {
+  color: transparent;
+}
+
+.input-container label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 12px;
+  color: #ccc;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e90ff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0c7cd5;
+}
+
+/* Link styling */
+.link {
+  color: #aad3ff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+p {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}

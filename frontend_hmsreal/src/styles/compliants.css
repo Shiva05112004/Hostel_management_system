@@ -1,0 +1,124 @@
+
+
+.complaints-container {
+  padding: 30px;
+  max-width: 800px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.complaint-form {
+  background: #3d6faf;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+.complaint-form input,
+.complaint-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+.complaint-form button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.complaint-form button:hover {
+  background-color: #0056b3;
+}
+
+.complaint-item {
+  border: 1px solid #ddd;
+  background: #2892ac;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.complaint-item:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.complaint-status {
+  font-weight: bold;
+  color: #555;
+}
+
+.mark-resolved-btn {
+  margin-top: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.mark-resolved-btn:hover {
+  background-color: #1e7e34;
+}
+/*.complaints-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.complaint-form input,
+.complaint-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.complaint-form button {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.complaint-form button:hover {
+  background: #0056b3;
+}
+
+.complaint-item {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid #007bff;
+  border-radius: 8px;
+}
+
+.complaint-status {
+  font-weight: bold;
+}
+
+.complaint-status.pending {
+  color: orange;
+}
+
+.complaint-status.resolved {
+  color: green;
+}
+*/

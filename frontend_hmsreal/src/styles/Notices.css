@@ -1,0 +1,46 @@
+.notices {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #0b659d;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.notices h3 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.notice-card {
+  background-color: #05b6b6;
+  border-left: 6px solid #3498db;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.2rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.notice-card:hover {
+  background-color: #eaf6ff;
+}
+
+.notice-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #34495e;
+}
+
+.notice-card p {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.notice-card small {
+  font-size: 0.875rem;
+  color: #888;
+}

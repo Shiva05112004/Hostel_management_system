@@ -1,0 +1,13 @@
+const mongoose = require('mongoose');
+
+const foodMenuSchema = new mongoose.Schema({
+  day: String,
+  meals: {
+    breakfast: String,
+    lunch: String,
+    snacks: String,
+    dinner: String,
+  },
+});
+
+module.exports = mongoose.model('FoodMenu', foodMenuSchema);
