@@ -1,3 +1,81 @@
+# Frontend — Hostel Management System (frontend_hmsreal)
+
+React frontend for the Hostel Management System. Built with Create React App and Tailwind CSS (project files under `src/`). Connects to the backend APIs to manage students, rooms, notices, payments, complaints and food attendance.
+
+## Quick start
+
+- Install dependencies:
+
+```bash
+npm install
+```
+
+- Environment: set API base URL (example in `.env` or local env):
+
+```
+REACT_APP_API_BASE_URL=http://localhost:5000/api
+```
+
+- Run locally:
+
+```bash
+npm start
+```
+
+- Build for production:
+
+```bash
+npm run build
+```
+
+## Folder structure
+
+```
+frontend_hmsreal/
+  package.json
+  public/
+  src/
+    api/
+      axios.js
+    components/
+      Header.js
+      Layout.js
+      Navbar.js
+      PrivateRoutes.js
+      ProtectedRoute.js
+      Sidebar.js
+    context/
+      AuthContext.js
+    pages/
+      Dashboard.js
+      Login.js
+      Register.jsx
+      Students.js
+      Rooms.js
+      ...
+    styles/
+    utils/
+      axiosInstance.js
+```
+
+## Environment & configuration
+
+- `REACT_APP_API_BASE_URL` should point at your backend API root.
+- Check `src/api/axios.js` and `src/utils/axiosInstance.js` for axios configuration and interceptors.
+
+## Common tasks
+
+- Install deps: `npm install`
+- Start dev server: `npm start`
+- Create production build: `npm run build`
+
+## Notes
+
+- The production build outputs to the `build/` folder (already present in repo).
+- Update environment variables and CORS on backend if needed.
+
+---
+I can add a short local dev checklist or an env example file next, if you want.
 # HMS Frontend (frontend_hmsreal)
 
 React frontend for the Hostel Management System (HMS).
