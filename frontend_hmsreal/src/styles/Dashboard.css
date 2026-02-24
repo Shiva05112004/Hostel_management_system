@@ -95,3 +95,19 @@
 .dashboard-sidebar button:hover {
   background-color: #3f5870;
 }
+
+.containerdashboard{
+display:inline;
+  justify-content: center;
+   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 40px;
+  border-radius: 16px;
+  width: 320px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+align-items: center;
+
+}

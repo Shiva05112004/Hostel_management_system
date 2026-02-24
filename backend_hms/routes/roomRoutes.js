@@ -29,13 +29,50 @@ router.get("/available", verifyToken, async (req, res) => {
 // @access  Private (Student)
 router.get("/myroom", verifyToken, async (req, res) => {
   try {
-    const student = await Student.findById(req.user.id).populate("room");
+    // find Student document by linked User id
+    const student = await Student.findOne({ user: req.user.id });
     if (!student) return res.status(404).json({ msg: "Student not found" });
 
-    res.json(student.room);
+    if (!student.room) return res.json(null);
+
+    const room = await Room.findById(student.room).populate('occupants', 'name');
+    if (!room) return res.status(404).json({ msg: 'Room not found' });
+
+    // prepare roommates list excluding the requesting student
+    const roommates = room.occupants.filter(o => o._id.toString() !== student._id.toString()).map(o => ({ id: o._id, name: o.name }));
+
+    res.json({ roomNumber: room.roomNumber, capacity: room.capacity, roommates });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: "Server error while fetching student room" });
+  }
+});
+// GET /api/room/number/:roomNumber
+// Returns roommates for the given roomNumber only if requester is admin or belongs to that room
+router.get('/number/:roomNumber', verifyToken, async (req, res) => {
+  try {
+    const { roomNumber } = req.params;
+    const room = await Room.findOne({ roomNumber }).populate('occupants', 'name');
+    if (!room) return res.status(404).json({ msg: 'Room not found' });
+
+    // If admin, allow
+    if (req.user.role === 'admin') {
+      const roommates = room.occupants.map(o => ({ id: o._id, name: o.name }));
+      return res.json({ roomNumber: room.roomNumber, capacity: room.capacity, roommates });
+    }
+
+    // For students, ensure requester belongs to this room
+    const student = await Student.findOne({ user: req.user.id });
+    if (!student) return res.status(404).json({ msg: 'Student not found' });
+    if (!student.room || student.room.toString() !== room._id.toString()) {
+      return res.status(403).json({ msg: 'Access denied' });
+    }
+
+    const roommates = room.occupants.filter(o => o._id.toString() !== student._id.toString()).map(o => ({ id: o._id, name: o.name }));
+    res.json({ roomNumber: room.roomNumber, capacity: room.capacity, roommates });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 router.post('/assign', verifyToken, isAdmin, assignRoomToStudent);

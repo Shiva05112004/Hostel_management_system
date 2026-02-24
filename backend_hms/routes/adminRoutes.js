@@ -27,6 +27,14 @@ router.put('/complaints/:id', updateComplaintStatus);
 router.get('/payments', AdminController.getAllPayments);
 router.post('/notices', AdminController.postNotice);
 router.get('/notices', AdminController.getAllNotices);
+ 
+// Student management
+router.get('/students', AdminController.getAllStudents);
+router.get('/students/pending', AdminController.getPendingStudents);
+router.post('/students/approve/:id', AdminController.approveStudent);
+router.post('/students/reject/:id', AdminController.rejectStudent);
+router.post('/students', AdminController.adminAddStudent);
+router.delete('/students/:id', AdminController.adminDeleteStudent);
 
 // Rooms list
 router.get("/", async (req, res) => {
@@ -74,6 +82,54 @@ router.post("/assign", async (req, res) => {
     res.status(200).json({ msg: "Room assigned successfully", room });
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// Assign student to room by roomNumber (admin UI can send studentId + roomNumber)
+router.post('/assign-by-number', async (req, res) => {
+  try {
+    const { studentId, roomNumber } = req.body;
+    if (!studentId || !roomNumber) return res.status(400).json({ msg: 'studentId and roomNumber required' });
+
+    const room = await Room.findOne({ roomNumber });
+    if (!room) return res.status(404).json({ msg: 'Room not found' });
+    const student = await Student.findById(studentId);
+    if (!student) return res.status(404).json({ msg: 'Student not found' });
+
+    // If student already assigned to this room, nothing to do
+    if (student.room && student.room.toString() === room._id.toString()) {
+      return res.status(200).json({ msg: 'Student already in this room', room });
+    }
+
+    // Remove from previous room occupants if assigned
+    if (student.room) {
+      try {
+        const prevRoom = await Room.findById(student.room);
+        if (prevRoom) {
+          prevRoom.occupants = prevRoom.occupants.filter(o => o.toString() !== student._id.toString());
+          await prevRoom.save();
+        }
+      } catch (err) {
+        // continue
+      }
+    }
+
+    // Check capacity on new room (after removal from previous room)
+    if (room.occupants.length >= room.capacity)
+      return res.status(400).json({ msg: 'Room is full' });
+
+    // Add to new room occupants
+    if (!room.occupants.some(o => o.toString() === student._id.toString())) {
+      room.occupants.push(student._id);
+      await room.save();
+    }
+
+    student.room = room._id;
+    await student.save();
+
+    res.status(200).json({ msg: 'Room assigned successfully', room });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

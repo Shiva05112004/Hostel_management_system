@@ -52,32 +52,3 @@ module.exports = {
   assignRoomToStudent,
   addRoom,
 };
-
-// const Room = require("../models/Room");
-// const Student = require("../models/Student");
-
-// exports.assignRoomToStudent = async (req, res) => {
-//   try {
-//     const { studentId, roomId } = req.body;
-
-//     const room = await Room.findById(roomId);
-//     if (!room) return res.status(404).json({ msg: "Room not found" });
-
-//     if (room.occupants.length >= room.capacity) {
-//       return res.status(400).json({ msg: "Room is full" });
-//     }
-
-//     // Add student to room occupants
-//     room.occupants.push(studentId);
-//     await room.save();
-
-//     // Assign room to student
-//     const student = await Student.findById(studentId);
-//     student.room = room._id;
-//     await student.save();
-
-//     res.status(200).json({ msg: "Room assigned successfully" });
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };

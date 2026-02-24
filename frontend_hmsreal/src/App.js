@@ -12,6 +12,7 @@ import Payments from './pages/Payments';
 import Complaints from './pages/Complaints';
 import FoodAttendance from './pages/FoodAttendance';
 import AdminPanel from './pages/AdminPanel';
+import AdminStudents from './pages/AdminStudents';
 import MyRoom from './pages/myroom';
 import AssignRoom from './pages/AssignRoom';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -41,6 +42,7 @@ function App() {
         <Route path="/student/complaints" element={<Complaints />} />
         <Route path="/food-attendance" element={<FoodAttendance />} />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin/students" element={<AdminStudents />} />
         <Route path="/admin/complaints" element={<AdminComplaints />} />
         <Route path="/admin/add-notice" element={<AddNotices />} />
         <Route path="/admin/rooms" element={<AdminRoomManager />} />
@@ -65,28 +67,3 @@ function App() {
 
 export default App;
 
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { AuthProvider } from "./context/AuthContext";
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import Login from "./pages/Login";
-// import Rigister from "./pages/Rigister1";
-// import Dashboard from "./pages/Dashboard";
-// import Students from "./pages/Students";
-// // ... other pages
-
-// export default function App() {
-//   return (
-//     <AuthProvider>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<Rigister />}/>
-//           <Route path="/Login" element={<Login />} />
-//           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-//           <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
-//           {/* More protected routes here */}
-//         </Routes>
-//       </Router>
-
-//     </AuthProvider>
-//   );
-// }

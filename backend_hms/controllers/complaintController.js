@@ -1,13 +1,18 @@
 
 const Complaint = require('../models/Complaint');
+const Student = require('../models/Student');
 
 // ✅ Student: Submit Complaint (renamed from createComplaint)
 const submitComplaint = async (req, res) => {
   try {
     const { title, description } = req.body;
 
+    // Find the Student document for the authenticated user
+    const studentDoc = await Student.findOne({ user: req.user.id });
+    if (!studentDoc) return res.status(400).json({ message: 'Student profile not found for this user' });
+
     const newComplaint = new Complaint({
-      student: req.user.id,
+      student: studentDoc._id,
       title,
       description,
       status: 'Pending',
@@ -24,7 +29,10 @@ const submitComplaint = async (req, res) => {
 // Other functions remain unchanged
 const getStudentComplaints = async (req, res) => {
   try {
-    const complaints = await Complaint.find({ student: req.user.id }).sort({ createdAt: -1 });
+    const studentDoc = await Student.findOne({ user: req.user.id });
+    if (!studentDoc) return res.status(400).json({ message: 'Student profile not found for this user' });
+
+    const complaints = await Complaint.find({ student: studentDoc._id }).sort({ createdAt: -1 });
     res.json(complaints);
   } catch (error) {
     console.error("Error fetching student complaints:", error);
@@ -56,11 +64,54 @@ const updateComplaintStatus = async (req, res) => {
 
 const getAllComplaints = async (req, res) => {
   try {
-    const complaints = await Complaint.find().populate('student', 'name email').sort({ createdAt: -1 });
-    res.json(complaints);
+    // Populate student -> room -> occupants (occupants populated with name and _id)
+    const complaints = await Complaint.find()
+      .populate({
+        path: 'student',
+        select: 'name email room',
+        populate: {
+          path: 'room',
+          select: 'roomNumber occupants',
+          populate: { path: 'occupants', select: 'name _id' }
+        }
+      })
+      .sort({ createdAt: -1 });
+
+    // Transform complaints to include student name/email and roomNumber (no roommates)
+    const transformed = complaints.map(c => {
+      const student = c.student || null;
+      let roomNumber = null;
+      if (student && student.room) {
+        roomNumber = student.room.roomNumber;
+      }
+
+      return {
+        _id: c._id,
+        title: c.title,
+        description: c.description,
+        status: c.status,
+        createdAt: c.createdAt,
+        student: student ? { id: student._id, name: student.name, email: student.email } : null,
+        roomNumber,
+      };
+    });
+
+    res.json(transformed);
   } catch (error) {
     console.error("Error fetching all complaints:", error);
     res.status(500).json({ message: 'Server error while fetching all complaints' });
+  }
+};
+
+const deleteComplaint = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Complaint.findByIdAndDelete(id);
+    if (!deleted) return res.status(404).json({ message: 'Complaint not found' });
+    res.json({ message: 'Complaint deleted' });
+  } catch (error) {
+    console.error('Error deleting complaint:', error);
+    res.status(500).json({ message: 'Server error while deleting complaint' });
   }
 };
 
@@ -70,137 +121,5 @@ module.exports = {
   getStudentComplaints,
   updateComplaintStatus,
   getAllComplaints,
+  deleteComplaint,
 };
-// const Complaint = require('../models/Complaint');
-
-
-// // ✅ Student: Create Complaint
-// const createComplaint = async (req, res) => {
-//   try {
-//     const { title, description } = req.body;
-
-//     const newComplaint = new Complaint({
-//       student: req.user.id, // token must attach student ID
-//       title,
-//       description,
-//       status: 'Pending',
-//     });
-
-//     const savedComplaint = await newComplaint.save();
-//     res.status(201).json(savedComplaint);
-//   } catch (error) {
-//     console.error("Error creating complaint:", error);
-//     res.status(500).json({ message: 'Server error while creating complaint' });
-//   }
-// };
-
-// // ✅ Student: Get Own Complaints
-// const getStudentComplaints = async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find({ student: req.user.id }).sort({ createdAt: -1 });
-//     res.json(complaints);
-//   } catch (error) {
-//     console.error("Error fetching student complaints:", error);
-//     res.status(500).json({ message: 'Server error while fetching complaints' });
-//   }
-// };
-
-// // ✅ Admin: Update Complaint Status
-// const updateComplaintStatus = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { status } = req.body;
-
-//     const updatedComplaint = await Complaint.findByIdAndUpdate(
-//       id,
-//       { status },
-//       { new: true }
-//     );
-
-//     if (!updatedComplaint) {
-//       return res.status(404).json({ message: 'Complaint not found' });
-//     }
-
-//     res.json(updatedComplaint);
-//   } catch (error) {
-//     console.error("Error updating complaint:", error);
-//     res.status(500).json({ message: 'Server error while updating complaint' });
-//   }
-// };
-
-// // ✅ Admin: Get All Complaints
-// const getAllComplaints = async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find().populate('student', 'name email').sort({ createdAt: -1 });
-//     res.json(complaints);
-//   } catch (error) {
-//     console.error("Error fetching all complaints:", error);
-//     res.status(500).json({ message: 'Server error while fetching all complaints' });
-//   }
-// };
-
-// module.exports = {
-//   createComplaint,
-//   getStudentComplaints,
-//   updateComplaintStatus,
-//   getAllComplaints,
-// };
-
-
-// const Complaint = require('../models/Complaint');
-
-// const createComplaint = async (req, res) => {
-//   try {
-//     const { title, description } = req.body;
-
-//     const newComplaint = new Complaint({
-//       student: req.user.id, // Set by middleware
-//       title,
-//       description
-//     });
-
-//     const savedComplaint = await newComplaint.save();
-//     res.status(201).json(savedComplaint);
-//   } catch (error) {
-//     console.error("Error creating complaint:", error);
-//     res.status(500).json({ message: 'Server error while creating complaint' });
-//   }
-// };
-
-// module.exports = { createComplaint };
-
-
-
-// const Complaint = require("../models/Complaint");
-
-// exports.submitComplaint = async (req, res) => {
-//   try {
-//     const complaint = new Complaint({ ...req.body, student: req.user.id });
-//     await complaint.save();
-//     res.status(201).json(complaint);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
-// exports.getAllComplaints = async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find().populate("student");
-//     res.json(complaints);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
-// exports.updateComplaintStatus = async (req, res) => {
-//   try {
-//     const complaint = await Complaint.findByIdAndUpdate(
-//       req.params.id,
-//       { status: req.body.status },
-//       { new: true }
-//     );
-//     res.json(complaint);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };

@@ -104,22 +104,4 @@ exports.postComplaint = async (req, res) => {
   await newComplaint.save();
   res.json({ message: 'Complaint submitted' });
 };
-// const User = require("../models/User");
 
-// exports.getAllStudents = async (req, res) => {
-//   try {
-//     const students = await User.find({ role: "student" }).populate("room");
-//     res.json(students);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };
-
-// exports.getStudentById = async (req, res) => {
-//   try {
-//     const student = await User.findById(req.params.id).populate("room");
-//     res.json(student);
-//   } catch (err) {
-//     res.status(500).json({ msg: "Server error" });
-//   }
-// };

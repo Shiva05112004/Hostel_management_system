@@ -49,8 +49,7 @@ const Navbar = () => {
      
        <Link to="/admin/add-notice">Add Notice</Link>
     <Link to="/admin/rooms">Room Manager</Link>
-
-    {/* 👈 Add this line */}
+    <Link to="/admin/students">Students</Link>
   </>
 )}
 

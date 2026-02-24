@@ -2,6 +2,14 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const jwt = require('jsonwebtoken');
+let mongoMemoryServer;
+const useInMemory = async () => {
+  // Lazy-require to avoid adding in production unless needed
+  const { MongoMemoryServer } = require('mongodb-memory-server');
+  mongoMemoryServer = await MongoMemoryServer.create();
+  return mongoMemoryServer.getUri();
+};
 
 const authRoutes = require("./routes/authRoutes");
 // const studentRoutes = require("./routes/studentRoutes");
@@ -42,22 +50,91 @@ app.use("/api/student/payments", paymentRoutes);
 
 // ✅ ADDED correctly now
 
-// MongoDB Connection and Server Listener
-mongoose
-  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/hms", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
+// MongoDB Connection and Server Listener with in-memory fallback
+const startServer = async () => {
+  const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/hms';
+  try {
+    await mongoose.connect(uri);
     console.log("✅ MongoDB connected");
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
+  } catch (err) {
+    console.warn('⚠️ Could not connect to configured MongoDB. Falling back to in-memory MongoDB.');
+    try {
+      const memUri = await useInMemory();
+      await mongoose.connect(memUri);
+      console.log('✅ Connected to in-memory MongoDB');
+    } catch (memErr) {
+      console.error('❌ In-memory MongoDB failed:', memErr);
+      process.exit(1);
+    }
+  }
+
+  const PORT = process.env.PORT || 5000;
+  // Create HTTP server and attach Socket.IO for real-time features
+  const http = require('http');
+  const { Server } = require('socket.io');
+  const server = http.createServer(app);
+
+  const io = new Server(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
+    }
   });
+
+  // Make io accessible via app for controllers
+  app.set('io', io);
+
+  // Socket auth middleware: verify JWT passed in handshake.auth.token
+  io.use((socket, next) => {
+    try {
+      const token = socket.handshake.auth && socket.handshake.auth.token;
+      if (!token) return next(new Error('Authentication error'));
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      socket.user = decoded; // { id, role, ... }
+      return next();
+    } catch (err) {
+      console.warn('Socket auth failed:', err.message);
+      return next(new Error('Authentication error'));
+    }
+  });
+
+  io.on('connection', (socket) => {
+    console.log('Socket connected:', socket.id, 'user:', socket.user && socket.user.id);
+
+    socket.on('joinRoom', (room) => {
+      // Only allow admins to join admin attendance rooms
+      try {
+        if (!socket.user) return;
+        if (socket.user.role !== 'admin') {
+          // prevent non-admins joining admin rooms
+          console.warn(`Socket ${socket.id} denied joinRoom ${room} (not admin)`);
+          return;
+        }
+        socket.join(room);
+      } catch (e) {
+        // ignore
+      }
+    });
+
+    socket.on('leaveRoom', (room) => {
+      try {
+        if (!socket.user) return;
+        if (socket.user.role !== 'admin') return;
+        socket.leave(room);
+      } catch (e) {}
+    });
+
+    socket.on('disconnect', () => {
+      // console.log('Socket disconnected:', socket.id);
+    });
+  });
+
+  server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+};
+
+startServer();
 // const express = require("express");
 // const cors = require("cors");
 // require("dotenv").config();

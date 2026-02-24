@@ -44,3 +44,8 @@
   font-size: 0.875rem;
   color: #888;
 }
+ p{
+  align-items: center;
+  align-content: center;
+  margin: auto;
+ }

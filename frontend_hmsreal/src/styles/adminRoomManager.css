@@ -1,18 +1,8 @@
-/* styles/adminRoomManager.css */
 
-.room-manager {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #267495;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
 
 .room-manager h3 {
   margin-bottom: 20px;
-  color: #333;
+  color: #0a0a0a;
   font-size: 1.5rem;
 }
 
@@ -46,4 +36,27 @@
 
 .room-manager button:hover {
   background-color: #0056b3;
+}
+.addroom {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  /* background-color: (255,255,255,0.15);
+  backdrop-filter: blur(15px); */
+  border-radius: 12px;
+  
+  text-align: center; 
+     background: rgba(232, 227, 227, 0.15);
+    backdrop-filter: blur(15px);
+
+}
+.assignroom{
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: (255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  
+  text-align: center;
 }

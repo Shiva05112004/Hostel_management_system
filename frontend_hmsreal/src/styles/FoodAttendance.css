@@ -1,7 +1,7 @@
-.food-attendance-container {
+.food-attendance-container1{
   padding: 20px;
   font-family: 'Segoe UI', sans-serif;
-  background-color: hsl(203, 80%, 98%);
+  background-color:rgba(255,255,255,);
   border-radius: 10px;
   
   background-image: url("https://imgcdn.stablediffusionweb.com/2024/6/19/0cc89d13-61db-402c-abf5-b4ed192ea025.jpg"); /* ✅ Put your image in public/images/bg.jpg */
@@ -13,29 +13,31 @@
 
 
 
-.food-form {
+.food-form1 {
   margin-bottom: 25px;
-  background-color: #93afbd;
+  background-color:rgba(14, 87, 190, 0.8);
+  backdrop-filter: blur(15px);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.food-form label {
+.food-form1 label {
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
 
-.food-form select {
+.food-form1 select {
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
   border-radius: 6px;
 }
 
-.meal-box {
-  background-color: #f0f9ff;
+.meal-box1 {
+  background-color: #0077ff;
+
   padding: 12px;
   margin: 10px 0;
   border-radius: 8px;
@@ -43,7 +45,12 @@
 }
 
 button {
+  max-width: 200px;
   padding: 10px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   border: none;
   border-radius: 6px;
   background-color: #0077ff;
@@ -55,13 +62,20 @@ button {
 button:disabled {
   background-color: gray;
 }
+button:not(:disabled):hover {
+  background-color:#0cd209;
+}
+button:active {
+  background-color: #c23008;
+  transform: scale(0.98);
+}
 
-.message {
+.message1 {
   margin-top: 10px;
   font-weight: bold;
 }
 
-.special-today-section {
+.special-today-section1 {
   background-color: #fff8f0;
   padding: 15px;
   margin: 20px 0;
@@ -69,79 +83,31 @@ button:disabled {
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.special-today-section ul {
+.special-today-section1 ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-.special-today-section li {
+.special-today-section1 li {
   margin: 6px 0;
   font-size: 16px;
 }
 
-.student-attendance {
+.student-attendance1 {
   margin-top: 25px;
+  background-color: #6e92ba;
+  border-radius: 2rem;
+
 }
 
-.meal-item {
-  background-color: #ffffff;
+.meal-item1 {
+  background-color: #0077ff;
+ margin-bottom: 12px;
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 15px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-/* .food-attendance-container {
-  max-width: 500px;
-  margin: auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+p{
+  border-radius: 2rem;
 }
-
-.food-attendance-container h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.food-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.food-form select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.food-form button {
-  width: 100%;
-  padding: 0.7rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.food-form button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.meal-box {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-}
-
-.message {
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: #333;
-} */

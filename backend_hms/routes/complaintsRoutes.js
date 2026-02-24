@@ -3,7 +3,8 @@ const {
   submitComplaint,
   updateComplaintStatus,
   getAllComplaints,
-  getStudentComplaints
+  getStudentComplaints,
+  deleteComplaint
 } = require('../controllers/complaintController');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware'); // ✅ include isAdmin
 
@@ -20,6 +21,9 @@ router.get('/', verifyToken, isAdmin, getAllComplaints);
 
 // Admin: Update complaint status
 router.put('/:id', verifyToken, isAdmin, updateComplaintStatus);
+
+// Admin: Delete a complaint
+router.delete('/:id', verifyToken, isAdmin, deleteComplaint);
 
 module.exports = router;
 

@@ -20,9 +20,10 @@ const AssignRoom = () => {
     const fetchData = async () => {
       try {
         const [studentRes, roomRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/students', { headers }),
-          axios.get('http://localhost:5000/api/rooms', { headers })
+          axios.get('http://localhost:5000/api/admin/students', { headers }),
+          axios.get('http://localhost:5000/api/admin', { headers })
         ]);
+        // admin/students returns mapped objects { id, name, ... }
         setStudents(studentRes.data);
         setRooms(roomRes.data);
       } catch (error) {
@@ -40,7 +41,7 @@ const AssignRoom = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/rooms/assign',
+        'http://localhost:5000/api/admin/assign',
         { studentId: selectedStudent, roomId: selectedRoom },
         { headers }
       );
@@ -62,7 +63,7 @@ const AssignRoom = () => {
         <select value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)}>
           <option value="">Select Student</option>
           {students.map((s) => (
-            <option key={s._id} value={s._id}>
+            <option key={s.id} value={s.id}>
               {s.name}
             </option>
           ))}
