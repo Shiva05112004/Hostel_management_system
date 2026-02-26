@@ -26,7 +26,10 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors(
+  { origin: "https://Hostel1managementsystem.vercel.app",
+  credentials: true}
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -52,7 +55,8 @@ app.use("/api/student/payments", paymentRoutes);
 
 // MongoDB Connection and Server Listener with in-memory fallback
 const startServer = async () => {
-  const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/hms';
+  // const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/hms';      becuase of isuue
+  const uri = process.env.MONGO_URI;
   try {
     await mongoose.connect(uri);
     console.log("✅ MongoDB connected");
