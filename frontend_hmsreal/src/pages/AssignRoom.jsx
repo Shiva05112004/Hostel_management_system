@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,10 +10,10 @@ const AssignRoom = () => {
   const [selectedRoom, setSelectedRoom] = useState('');
 
   const token = localStorage.getItem('token');
-  const headers = {
+  const headers =useMemo(()=>( {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json'
-  };
+  }),[token]);
 
   // Fetch students and rooms
   useEffect(() => {

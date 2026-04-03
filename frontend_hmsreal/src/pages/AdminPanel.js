@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef ,useMemo} from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { CSVLink } from 'react-csv';
@@ -17,7 +17,7 @@ const AdminPanel = () => {
   const [meals, setMeals] = useState([]);
 
   const token = localStorage.getItem('token');
-  const headers = { Authorization: `Bearer ${token}` };
+  const headers = useMemo(() => ({ Authorization: `Bearer ${token}` }), [token]);
   const socketRef = useRef(null);
   const currentRoomRef = useRef(null);
 

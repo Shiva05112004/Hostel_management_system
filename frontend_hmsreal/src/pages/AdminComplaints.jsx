@@ -1,5 +1,5 @@
 // src/components/AdminComplaints.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useCallback} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CSVLink } from 'react-csv';
@@ -9,20 +9,40 @@ const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
   const token = localStorage.getItem('token');
 
-  const fetchComplaints = async () => {
-    try {
-      const res = await axios.get('http://localhost:5000/api/complaints', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setComplaints(res.data);
-    } catch (err) {
-      toast.error('Failed to load complaints.');
-    }
-  };
+  // const fetchComplaints = async () => {
+  //   try {
+  //     const res = await axios.get('http://localhost:5000/api/complaints', {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     setComplaints(res.data);
+  //   } catch (err) {
+  //     toast.error('Failed to load complaints.');
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchComplaints();
-  }, [fetchComplaints]);
+  // useEffect(() => {
+  //   fetchComplaints();
+  // }, [fetchComplaints]);
+  //change above to useCallback to avoid infinite loop
+ // Ensure useCallback is imported
+
+// ... inside your component ...
+
+const fetchComplaints = useCallback(async () => {
+  try {
+    const res = await axios.get('http://localhost:5000/api/complaints', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setComplaints(res.data);
+  } catch (err) {
+    toast.error('Failed to load complaints.');
+  }
+}, [token]); // token is a dependency here
+
+useEffect(() => {
+  fetchComplaints();
+}, [fetchComplaints]); // Now this only triggers if fetchComplaints changes
+
 
   const csvData = complaints.map(c => ({
     Title: c.title,
