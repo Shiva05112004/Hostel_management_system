@@ -138,7 +138,7 @@ const AdminStudents = () => {
       <ToastContainer />
       <h2 style={{color:'rgba(0,0,0)',backgroundColor:'aqua'}}>Admin — Students</h2>
 
-      <section style={{ marginBottom: '20px' }}><div style={{backgroundColor:'rgba(255, 255, 255, 0.15)',backdropFilter:' blur(15px)',padding:'10px',borderRadius:'8px',borderRadius:'8px',boxShadow:'0 4px 12px rgba(0, 0, 0, 0.3)'}}>
+      <section style={{ marginBottom: '20px' }}><div style={{backgroundColor:'rgba(255, 255, 255, 0.15)',backdropFilter:' blur(15px)',padding:'10px',borderRadius:'8px',boxShadow:'0 4px 12px rgba(0, 0, 0, 0.3)'}}>
         <h3>Pending Registrations</h3>
         {pending.length === 0 ? (
           <p style={{marginLeft:'200px'}}>No pending students.</p>

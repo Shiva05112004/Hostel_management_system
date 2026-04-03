@@ -31,7 +31,7 @@ const AssignRoom = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [headers]);
 
   const handleAssign = async () => {
     if (!selectedStudent || !selectedRoom) {

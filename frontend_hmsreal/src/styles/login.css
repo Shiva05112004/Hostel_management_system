@@ -2,7 +2,7 @@
 .login-container {
   height: 100vh;
   width: 100vw;
-  background-image: url(''); /* Ensure image exists in /public/images/ */
+  background-image: none; /* Ensure image exists in /public/images/ */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

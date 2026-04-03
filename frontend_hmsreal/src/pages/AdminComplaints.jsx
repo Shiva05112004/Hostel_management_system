@@ -22,7 +22,7 @@ const AdminComplaints = () => {
 
   useEffect(() => {
     fetchComplaints();
-  }, []);
+  }, [fetchComplaints]);
 
   const csvData = complaints.map(c => ({
     Title: c.title,
