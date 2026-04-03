@@ -78,7 +78,7 @@ const FoodAttendance = () => {
 
     try {
       const res = await axios.post(
-        `${API}http://localhost:5000/api/food/attendance`,
+        `${API}/api/food/attendance`,
         { mealType: selectedMealType, date },
         { headers }
       );
