@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CSVLink } from 'react-csv';
 import '../styles/compliants.css';
+const API = process.env.REACT_APP_API_URL;
 
 const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -30,7 +31,7 @@ const AdminComplaints = () => {
 
 const fetchComplaints = useCallback(async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/complaints', {
+    const res = await axios.get(`${API}/api/complaints`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setComplaints(res.data);
@@ -73,7 +74,7 @@ useEffect(() => {
   const markResolved = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/complaints/${id}`,
+        `${API}/api/complaints/${id}`,
         { status: 'Resolved' },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +87,7 @@ useEffect(() => {
 
   const deleteComplaint = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/complaints/${id}`, {
+      await axios.delete(`${API}/api/complaints/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Complaint deleted');

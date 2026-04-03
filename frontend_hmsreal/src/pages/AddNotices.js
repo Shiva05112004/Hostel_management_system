@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/addNotices.css';
+const API = process.env.REACT_APP_API_URL;
 
 const AddNotice = () => {
   const [title, setTitle] = useState('');
@@ -18,7 +19,7 @@ const AddNotice = () => {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/notices/add',
+        `${API}/api/notices/add`,
         { title, message },
         {
           headers: {

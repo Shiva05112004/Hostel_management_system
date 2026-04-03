@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/FoodAttendance.css'; // Reuse the same styling
+const API = process.env.REACT_APP_API_URL;
 
 const FoodAttendance = () => {
   const [meals, setMeals] = useState([]);
@@ -19,7 +20,7 @@ const FoodAttendance = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/food/meals', { headers });
+        const res = await axios.get(`${API}/api/food/meals`, { headers });
         setMeals(res.data);
       } catch (error) {
         console.error('Error fetching meals:', error);
@@ -35,7 +36,7 @@ const FoodAttendance = () => {
     const fetchMealDescription = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/food/today-meal/${selectedMealType}/${date}`,
+          `${API}/api/food/today-meal/${selectedMealType}/${date}`,
           { headers }
         );
         setMealDescription(res.data?.description || 'No description available.');
@@ -52,7 +53,7 @@ const FoodAttendance = () => {
     const checkAttendance = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/food/attendance-status/${selectedMealType}/${date}`,
+          `${API}/api/food/attendance-status/${selectedMealType}/${date}`,
           { headers }
         );
         setAttendanceStatus((prev) => ({
@@ -77,7 +78,7 @@ const FoodAttendance = () => {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/food/attendance',
+        `${API}http://localhost:5000/api/food/attendance`,
         { mealType: selectedMealType, date },
         { headers }
       );

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/login.css'; // Should match with CSS given below
-
+const API = process.env.REACT_APP_API_URL;
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +25,7 @@ function Login() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post(`${API}/api/auth/login`, { email, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.user.role);
       toast.success('Login successful');

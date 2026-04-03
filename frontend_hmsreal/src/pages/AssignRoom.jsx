@@ -2,6 +2,8 @@ import React, { useState, useEffect,useMemo } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const API = process.env.REACT_APP_API_URL;
+
 
 const AssignRoom = () => {
   const [students, setStudents] = useState([]);
@@ -20,8 +22,8 @@ const AssignRoom = () => {
     const fetchData = async () => {
       try {
         const [studentRes, roomRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/students', { headers }),
-          axios.get('http://localhost:5000/api/admin', { headers })
+          axios.get(`${API}/api/admin/students`, { headers }),
+          axios.get(`${API}/api/admin`, { headers })
         ]);
         // admin/students returns mapped objects { id, name, ... }
         setStudents(studentRes.data);
@@ -41,7 +43,7 @@ const AssignRoom = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/admin/assign',
+        `${API}/api/admin/assign`,
         { studentId: selectedStudent, roomId: selectedRoom },
         { headers }
       );

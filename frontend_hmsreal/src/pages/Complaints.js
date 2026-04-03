@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/compliants.css'; // Ensure correct path
+const API = process.env.REACT_APP_API_URL;
 
 const Complaints = () => {
   const [title, setTitle] = useState('');
@@ -14,7 +15,7 @@ const Complaints = () => {
   // Fetch student's own complaints
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/complaints/student', {
+      const res = await axios.get(`${API}/api/complaints/student`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setComplaints(res.data);
@@ -36,7 +37,7 @@ const Complaints = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/complaints',
+        `${API}/api/complaints`,
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );

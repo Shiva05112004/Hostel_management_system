@@ -6,6 +6,7 @@ import { CSVLink } from 'react-csv';
 import { io } from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/AdminPanel.css';
+const API = process.env.REACT_APP_API_URL;
 
 const AdminPanel = () => {
   const [mealType, setMealType] = useState('breakfast');
@@ -28,7 +29,7 @@ const AdminPanel = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/food/attending/${mealType}/${date}`,
+        `${API}/api/food/attending/${mealType}/${date}`,
         { headers }
       );
       console.log("Attendance API response:", res.data);
@@ -67,7 +68,7 @@ const AdminPanel = () => {
   useEffect(() => {
     // initialize socket connection once on mount
     const tokenLocal = localStorage.getItem('token');
-    socketRef.current = io('http://localhost:5000', { auth: { token: tokenLocal } });
+    socketRef.current = io(`${API}`, { auth: { token: tokenLocal } });
 
     socketRef.current.on('connect', () => {
       console.log('Socket connected', socketRef.current.id);
@@ -104,7 +105,7 @@ const AdminPanel = () => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/food/add',
+        `${API}/api/food/add`,
         { mealType, date, description },
         { headers }
       );
@@ -119,7 +120,7 @@ const AdminPanel = () => {
   const deleteMeal = async (mealType, date) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/food/admin/delete-meal/${mealType}/${date}`,
+        `${API}/api/food/admin/delete-meal/${mealType}/${date}`,
         { headers }
       );
       toast.success('Meal deleted!');
@@ -131,7 +132,7 @@ const AdminPanel = () => {
 
   const fetchMeals = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/food/admin/all-meals', { headers });
+      const res = await axios.get(`${API}/api/food/admin/all-meals`, { headers });
       setMeals(res.data || []);
     } catch (err) {
       toast.error('Could not fetch meals');
@@ -244,7 +245,7 @@ const AdminPanel = () => {
             </button>
             {/* Server-side CSV */}
             <a
-              href={`http://localhost:5000/api/food/attending/${mealType}/${date}/csv`}
+              href={`${API}/api/food/attending/${mealType}/${date}/csv`}
               className="btn btn-secondary"
               style={{ marginLeft: 8 }}
             >
@@ -252,7 +253,7 @@ const AdminPanel = () => {
             </a>
             <button
               onClick={() => {
-                const url = `http://localhost:5000/api/food/attending/${mealType}/${date}/csv?view=1`;
+                const url = `${API}/api/food/attending/${mealType}/${date}/csv?view=1`;
                 window.open(url, '_blank');
               }}
               style={{ marginLeft: 8 }}
