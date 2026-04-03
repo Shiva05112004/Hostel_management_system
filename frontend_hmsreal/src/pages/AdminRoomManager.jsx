@@ -10,6 +10,7 @@ import '../styles/adminRoomManager.css';
 const AdminRoomManager = () => {
   const [roomNumber, setRoomNumber] = useState('');
   const [capacity, setCapacity] = useState('');
+  
   //const token = localStorage.getItem('token');
   const [students, setStudents] = useState([]);
   const [rooms, setRooms] = useState([]);

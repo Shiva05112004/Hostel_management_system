@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect, useCallback, useRef ,useMemo} from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { CSVLink } from 'react-csv';
 import { io } from 'socket.io-client';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/AdminPanel.css';
-const API = process.env.REACT_APP_API_URL;
+
 
 const AdminPanel = () => {
   const [mealType, setMealType] = useState('breakfast');
@@ -28,8 +28,8 @@ const AdminPanel = () => {
     }
 
     try {
-      const res = await axios.get(
-        `${API}/api/food/attending/${mealType}/${date}`,
+      const res = await api.get(
+        `/api/food/attending/${mealType}/${date}`,
         { headers }
       );
       console.log("Attendance API response:", res.data);
@@ -68,7 +68,7 @@ const AdminPanel = () => {
   useEffect(() => {
     // initialize socket connection once on mount
     const tokenLocal = localStorage.getItem('token');
-    socketRef.current = io(`${API}`, { auth: { token: tokenLocal } });
+    socketRef.current = io('/', { auth: { token: tokenLocal } });
 
     socketRef.current.on('connect', () => {
       console.log('Socket connected', socketRef.current.id);
@@ -104,8 +104,8 @@ const AdminPanel = () => {
     }
 
     try {
-      await axios.post(
-        `${API}/api/food/add`,
+      await api.post(
+        '/api/food/add',
         { mealType, date, description },
         { headers }
       );
@@ -119,8 +119,8 @@ const AdminPanel = () => {
 
   const deleteMeal = async (mealType, date) => {
     try {
-      await axios.delete(
-        `${API}/api/food/admin/delete-meal/${mealType}/${date}`,
+      await api.delete(
+        `/api/food/admin/delete-meal/${mealType}/${date}`,
         { headers }
       );
       toast.success('Meal deleted!');
@@ -132,7 +132,7 @@ const AdminPanel = () => {
 
   const fetchMeals = useCallback(async () => {
     try {
-      const res = await axios.get(`${API}/api/food/admin/all-meals`, { headers });
+      const res = await api.get('/api/food/admin/all-meals', { headers });
       setMeals(res.data || []);
     } catch (err) {
       toast.error('Could not fetch meals');
@@ -245,7 +245,7 @@ const AdminPanel = () => {
             </button>
             {/* Server-side CSV */}
             <a
-              href={`${API}/api/food/attending/${mealType}/${date}/csv`}
+              href={`/api/food/attending/${mealType}/${date}/csv`}
               className="btn btn-secondary"
               style={{ marginLeft: 8 }}
             >
@@ -253,7 +253,7 @@ const AdminPanel = () => {
             </a>
             <button
               onClick={() => {
-                const url = `${API}/api/food/attending/${mealType}/${date}/csv?view=1`;
+                const url = `/api/food/attending/${mealType}/${date}/csv?view=1`;
                 window.open(url, '_blank');
               }}
               style={{ marginLeft: 8 }}

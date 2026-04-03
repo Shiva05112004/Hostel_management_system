@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect ,useMemo} from 'react';
+import api from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/FoodAttendance.css'; // Reuse the same styling
-const API = process.env.REACT_APP_API_URL;
+
 
 const FoodAttendance = () => {
   const [meals, setMeals] = useState([]);
@@ -14,13 +14,15 @@ const FoodAttendance = () => {
   const [message, setMessage] = useState('');
 
   const token = localStorage.getItem('token');
-  const headers = { Authorization: `Bearer ${token}` };
+  const headers = useMemo(() => ({ 
+    Authorization: `Bearer ${token}` 
+  }), [token]);
 
   // Fetch all meals
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const res = await axios.get(`${API}/api/food/meals`, { headers });
+        const res = await api.get('/api/food/meals', { headers });
         setMeals(res.data);
       } catch (error) {
         console.error('Error fetching meals:', error);
@@ -29,14 +31,14 @@ const FoodAttendance = () => {
     };
 
     fetchMeals();
-  }, [token]);
+  }, [headers]);
 
   // Fetch selected meal's description
   useEffect(() => {
     const fetchMealDescription = async () => {
       try {
-        const res = await axios.get(
-          `${API}/api/food/today-meal/${selectedMealType}/${date}`,
+        const res = await api.get(
+          `/api/food/today-meal/${selectedMealType}/${date}`,
           { headers }
         );
         setMealDescription(res.data?.description || 'No description available.');
@@ -46,14 +48,14 @@ const FoodAttendance = () => {
     };
 
     fetchMealDescription();
-  }, [selectedMealType, date]);
+  }, [selectedMealType, date,headers]);
 
   // Check if attendance is already marked for selected meal type
   useEffect(() => {
     const checkAttendance = async () => {
       try {
-        const res = await axios.get(
-          `${API}/api/food/attendance-status/${selectedMealType}/${date}`,
+        const res = await api.get(
+          `/api/food/attendance-status/${selectedMealType}/${date}`,
           { headers }
         );
         setAttendanceStatus((prev) => ({
@@ -69,7 +71,7 @@ const FoodAttendance = () => {
     };
 
     checkAttendance();
-  }, [selectedMealType, date]);
+  }, [selectedMealType, date,headers]);
 
   // Handle attendance submission
   const handleSubmit = async (e) => {
@@ -77,8 +79,8 @@ const FoodAttendance = () => {
     setMessage('');
 
     try {
-      const res = await axios.post(
-        `${API}/api/food/attendance`,
+      const res = await api.post(
+        '/api/food/attendance',
         { mealType: selectedMealType, date },
         { headers }
       );

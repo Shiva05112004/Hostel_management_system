@@ -1,6 +1,6 @@
-import axios from "axios";
+import api from '../api/axios';
 import { useEffect, useState } from "react";
-const API = process.env.REACT_APP_API_URL;
+
 
 const Payments = () => {
   const [payments, setPayments] = useState([]);
@@ -8,7 +8,7 @@ const Payments = () => {
   const fetchPayments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${API}/api/student/payments`, {
+      const res = await api.get('/api/student/payments', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPayments(res.data);

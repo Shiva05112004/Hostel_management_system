@@ -1,10 +1,10 @@
-import axios from 'axios';
+import api from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/reg.css'; 
-const API = process.env.REACT_APP_API_URL;// Ensure this includes your CSS shared above
+// Ensure this includes your CSS shared above
 
 function Register() {
   const [data, setData] = useState({ name: '', email: '', password: '', role: 'student' });
@@ -18,7 +18,7 @@ function Register() {
     }
 
     try {
-      await axios.post(`${API}/api/auth/register`, data);
+      await api.post('/api/auth/register', data);
       toast.success('Registration successful');
       localStorage.setItem('registered', true);
       setTimeout(() => {

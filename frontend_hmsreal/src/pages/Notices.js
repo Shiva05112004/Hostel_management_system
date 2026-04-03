@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import '../styles/Notices.css'; // 👈 Import the CSS file
-const API = process.env.REACT_APP_API_URL;
+
 const Notices = () => {
   const [notices, setNotices] = useState([]);
   const token = localStorage.getItem('token');
@@ -9,7 +9,7 @@ const Notices = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get(`${API}/api/notices/all`, {
+        const res = await api.get('/api/notices/all', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setNotices(res.data);

@@ -1,10 +1,10 @@
 // src/components/AdminComplaints.js
 import React, { useEffect, useState ,useCallback} from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { toast } from 'react-toastify';
 import { CSVLink } from 'react-csv';
 import '../styles/compliants.css';
-const API = process.env.REACT_APP_API_URL;
+
 
 const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -31,7 +31,7 @@ const AdminComplaints = () => {
 
 const fetchComplaints = useCallback(async () => {
   try {
-    const res = await axios.get(`${API}/api/complaints`, {
+    const res = await api.get('/api/complaints', {
       headers: { Authorization: `Bearer ${token}` },
     });
     setComplaints(res.data);
@@ -73,8 +73,8 @@ useEffect(() => {
 
   const markResolved = async (id) => {
     try {
-      await axios.put(
-        `${API}/api/complaints/${id}`,
+      await api.put(
+        `/api/complaints/${id}`,
         { status: 'Resolved' },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -87,7 +87,7 @@ useEffect(() => {
 
   const deleteComplaint = async (id) => {
     try {
-      await axios.delete(`${API}/api/complaints/${id}`, {
+      await api.delete(`/api/complaints/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Complaint deleted');
