@@ -22,8 +22,8 @@ const AssignRoom = () => {
     const fetchData = async () => {
       try {
         const [studentRes, roomRes] = await Promise.all([
-          api.get('/api/admin/students', { headers }),
-          api.get('/api/admin', { headers })
+          api.get('/admin/students', { headers }),
+          api.get('/admin', { headers })
         ]);
         // admin/students returns mapped objects { id, name, ... }
         setStudents(studentRes.data);
@@ -43,7 +43,7 @@ const AssignRoom = () => {
 
     try {
       await api.post(
-        '/api/admin/assign',
+        '/admin/assign',
         { studentId: selectedStudent, roomId: selectedRoom },
         { headers }
       );

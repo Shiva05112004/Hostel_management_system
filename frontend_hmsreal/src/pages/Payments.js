@@ -8,7 +8,7 @@ const Payments = () => {
   const fetchPayments = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await api.get('/api/student/payments', {
+      const res = await api.get('/student/payments', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPayments(res.data);

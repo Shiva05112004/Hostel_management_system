@@ -22,7 +22,7 @@ const FoodAttendance = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const res = await api.get('/api/food/meals', { headers });
+        const res = await api.get('/food/meals', { headers });
         setMeals(res.data);
       } catch (error) {
         console.error('Error fetching meals:', error);
@@ -38,7 +38,7 @@ const FoodAttendance = () => {
     const fetchMealDescription = async () => {
       try {
         const res = await api.get(
-          `/api/food/today-meal/${selectedMealType}/${date}`,
+          `/food/today-meal/${selectedMealType}/${date}`,
           { headers }
         );
         setMealDescription(res.data?.description || 'No description available.');
@@ -55,7 +55,7 @@ const FoodAttendance = () => {
     const checkAttendance = async () => {
       try {
         const res = await api.get(
-          `/api/food/attendance-status/${selectedMealType}/${date}`,
+          `/food/attendance-status/${selectedMealType}/${date}`,
           { headers }
         );
         setAttendanceStatus((prev) => ({
@@ -80,7 +80,7 @@ const FoodAttendance = () => {
 
     try {
       const res = await api.post(
-        '/api/food/attendance',
+        '/food/attendance',
         { mealType: selectedMealType, date },
         { headers }
       );

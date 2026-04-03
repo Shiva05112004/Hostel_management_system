@@ -15,7 +15,7 @@ const Complaints = () => {
   // Fetch student's own complaints
   const fetchComplaints = async () => {
     try {
-      const res = await api.get('/api/complaints/student', {
+      const res = await api.get('/complaints/student', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setComplaints(res.data);
@@ -37,7 +37,7 @@ const Complaints = () => {
 
     try {
       await api.post(
-        '/api/complaints',
+        '/complaints',
         { title, description },
         { headers: { Authorization: `Bearer ${token}` } }
       );

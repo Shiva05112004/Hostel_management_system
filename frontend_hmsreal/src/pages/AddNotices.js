@@ -21,7 +21,7 @@ const AddNotice = () => {
 
     try {
       const res = await api.post(
-        '/api/notices/add',
+        '/notices/add',
         { title, message },
         {
           headers: {

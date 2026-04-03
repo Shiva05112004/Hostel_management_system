@@ -18,7 +18,7 @@ function Register() {
     }
 
     try {
-      await api.post('/api/auth/register', data);
+      await api.post('/auth/register', data);
       toast.success('Registration successful');
       localStorage.setItem('registered', true);
       setTimeout(() => {

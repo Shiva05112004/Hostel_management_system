@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import api from '../utils/axiosInstance'
+import api from '../api/axios'
 
 const MyRoom = () => {
   const [room, setRoom] = useState(null)

@@ -9,7 +9,7 @@ const Notices = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await api.get('/api/notices/all', {
+        const res = await api.get('/notices/all', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setNotices(res.data);

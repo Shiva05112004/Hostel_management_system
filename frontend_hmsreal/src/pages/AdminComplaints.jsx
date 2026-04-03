@@ -31,7 +31,7 @@ const AdminComplaints = () => {
 
 const fetchComplaints = useCallback(async () => {
   try {
-    const res = await api.get('/api/complaints', {
+    const res = await api.get('/complaints', {
       headers: { Authorization: `Bearer ${token}` },
     });
     setComplaints(res.data);

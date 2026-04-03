@@ -29,7 +29,7 @@ const AdminPanel = () => {
 
     try {
       const res = await api.get(
-        `/api/food/attending/${mealType}/${date}`,
+        `/food/attending/${mealType}/${date}`,
         { headers }
       );
       console.log("Attendance API response:", res.data);
@@ -105,7 +105,7 @@ const AdminPanel = () => {
 
     try {
       await api.post(
-        '/api/food/add',
+        '/food/add',
         { mealType, date, description },
         { headers }
       );
@@ -120,7 +120,7 @@ const AdminPanel = () => {
   const deleteMeal = async (mealType, date) => {
     try {
       await api.delete(
-        `/api/food/admin/delete-meal/${mealType}/${date}`,
+        `/food/admin/delete-meal/${mealType}/${date}`,
         { headers }
       );
       toast.success('Meal deleted!');
@@ -132,7 +132,7 @@ const AdminPanel = () => {
 
   const fetchMeals = useCallback(async () => {
     try {
-      const res = await api.get('/api/food/admin/all-meals', { headers });
+      const res = await api.get('/food/admin/all-meals', { headers });
       setMeals(res.data || []);
     } catch (err) {
       toast.error('Could not fetch meals');
@@ -245,7 +245,7 @@ const AdminPanel = () => {
             </button>
             {/* Server-side CSV */}
             <a
-              href={`/api/food/attending/${mealType}/${date}/csv`}
+              href={`/food/attending/${mealType}/${date}/csv`}
               className="btn btn-secondary"
               style={{ marginLeft: 8 }}
             >
@@ -253,7 +253,7 @@ const AdminPanel = () => {
             </a>
             <button
               onClick={() => {
-                const url = `/api/food/attending/${mealType}/${date}/csv?view=1`;
+                const url = `/food/attending/${mealType}/${date}/csv?view=1`;
                 window.open(url, '_blank');
               }}
               style={{ marginLeft: 8 }}
