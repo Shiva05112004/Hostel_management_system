@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
 baseURL: process.env.REACT_APP_API_URL,
   //  baseURL: "http://localhost:5000/api",
- //baseURL: process.env.REACT_APP_API_URL,
+ //baseURL: "https://hostel-management-system-y432.onrender.com/api",
 });
 
 instance.interceptors.request.use(config => {
